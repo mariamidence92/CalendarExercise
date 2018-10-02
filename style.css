@@ -10,19 +10,19 @@
 
 body {
     font-size: 14px;
-    height: 100%;
-    overflow-y: hidden;
+    overflow-y: auto;
     width: 100%;
 }
 
 .calendar {
     display: flex;
     flex-wrap: wrap;
+    padding-bottom: 5%;
 }
 
 .calendar-container {
-    height: 75%;
     overflow-y: auto;
+    margin-top: 20px;
 }
 
 .data-container {
@@ -73,14 +73,12 @@ html {
 }
 
 .input-data label{
-    padding: padding: 1% 0 0 0;
+    padding-top: 1%;
 }
 
 .input-data input{
     margin-bottom: 10px;
     width: 100%;
-    grid-auto-rows: 1fr;
-
 }
 
 input {
@@ -136,6 +134,11 @@ input[type=number], input[type=text]{
 .month-title {
     background-color: beige;
     color: black;
+}
+
+.warning {
+    color: red;
+    padding: 1%;
 }
 
 .weekend {

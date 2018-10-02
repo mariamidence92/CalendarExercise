@@ -7,7 +7,8 @@ var Calendar = {
             daysInMonth = [31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
             limitForRows = [7, 14, 21, 28, 35, 42],
             rowBreak = [8, 15, 22, 29, 36, 43],
-            paint = true;
+            paint = true,
+            data;
         
         var getFirstDay = function(date) {
             let day = -1,
@@ -30,31 +31,35 @@ var Calendar = {
         var getHolidays = function (year, month) {
             var url = "https://holidayapi.com/v1/holidays?key=184143e0-a679-4f20-af41-7afd666ef867&country=" + countryCode + "&year=" + year + "&month=" + month;
             var httpRequest = new XMLHttpRequest();
-            httpRequest.open('GET', url, false);
+            httpRequest.open('GET', url, true);
             httpRequest.onreadystatechange = function () {
                 if (httpRequest.readyState == 4) {
                     if (httpRequest.status == 200) {
                         try {
                             data = JSON.parse(httpRequest.response);
+                            document.getElementById("warning-message").innerHTML = "";
                         } catch (e) {
                             console.log(e.toString());
                         }
                     } else {
-                        console.log("Error", httpRequest.statusText);
+                        // console.log("Error", httpRequest.statusText);
                     }
                 }
             }
             httpRequest.onerror = function (e) {
-                console.error(httpRequest.statusText);
+                // console.error(httpRequest.statusText);
+                document.getElementById("warning-message").innerHTML = "Error while accessing the current and upcoming holiday data.";
             }
             httpRequest.send();
         }
 
         isHoliday = function(d) {
-            for (let i = 0; i < data.holidays.length; i++) {
-                if (data.holidays[i].date.split("-")[2].replace(/(^|-)0+/g, "$1") == d)
-                    return data.holidays[i].name;
-            }
+            if(data){
+                for (let i = 0; i < data.holidays.length; i++) {
+                    if (data.holidays[i].date.split("-")[2].replace(/(^|-)0+/g, "$1") == d)
+                        return data.holidays[i].name;
+                }
+            }            
             return false;
         }
 

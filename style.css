@@ -19,6 +19,10 @@ body {
     grid-column:1;
 }
 
+form {
+    display: grid;
+}
+
 .general-container {
     width: 90%;
     margin: 0px auto;
@@ -66,4 +70,12 @@ input[type=button]{
     line-height: 25px;
     padding: 5px;
     width: 100%;
+} 
+
+input[type=date]{
+    height: 65%;
+} 
+
+input[type=number], input[type=text]{
+    height: 70%;
 } 

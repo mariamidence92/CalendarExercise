@@ -28,6 +28,9 @@ function addEventListeners() {
  */
 function createCalendar() {
     let input = getInputData();
+    let calendar = Object.create(Calendar);
+    calendar.drawCalendar(input.date, input.days, input.code, "");
+    getCalendar(calendar.getHtmlString());
 }
 
 /**
@@ -36,10 +39,22 @@ function createCalendar() {
  * @function getInputData
  */
 function getInputData() {
+    let inputDate = document.getElementById("date").value,
+    //New Date will make date one less day because of the timezone
+    realDate = new Date(inputDate);
+    //Adding the lost day to keep accuracy
+    realDate.setDate(realDate.getDate() + 1);
     return {
         days: document.getElementById("days").value,
         code: document.getElementById("code").value,
-        date: document.getElementById("date").value
+        date: realDate
     }
 }
 
+/**
+ * This function in particular will append the html string created directly to the page
+ * @function getCalendar
+ */
+function getCalendar(htmlText) {
+    document.querySelector(".calendar").insertAdjacentHTML("beforeend", htmlText);
+}

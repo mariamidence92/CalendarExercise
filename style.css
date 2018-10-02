@@ -17,11 +17,16 @@ body {
 
 .calendar {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .calendar-container {
-    margin-top: 20px;
-    overflow: auto;
+    height: 75%;
+    overflow-y: auto;
+}
+
+.data-container {
+    height:40%;
 }
 
 .days-header {
@@ -43,8 +48,9 @@ form {
 }
 
 .general-container {
-    width: 90%;
+    display: grid;
     margin: 0px auto;
+    width: 90%;
 }
 
 h1 {
@@ -67,7 +73,7 @@ html {
 }
 
 .input-data label{
-    padding: 1% 0
+    padding: padding: 1% 0 0 0;
 }
 
 .input-data input{
@@ -92,7 +98,7 @@ input[type=button]{
     color: #1091cc;
     font-weight: 900;
     line-height: 25px;
-    margin: 3% 0;
+    margin: 2% 0;
     width: 100%;
 } 
 

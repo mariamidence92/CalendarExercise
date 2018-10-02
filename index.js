@@ -28,10 +28,12 @@ function addEventListeners() {
  */
 function createCalendar() {
     clearHTML();
-    let input = getInputData();
-    let calendar = Object.create(Calendar);
-    calendar.drawCalendar(input.date, input.days, input.code, "");
-    getCalendar(calendar.getHtmlString());
+    if(validateInputData()){
+        let input = getInputData();
+        let calendar = Object.create(Calendar);
+        calendar.drawCalendar(input.date, input.days, input.code, "");
+        getCalendar(calendar.getHtmlString());
+    }    
 }
 
 /**
@@ -68,4 +70,29 @@ function getCalendar(htmlText) {
 function clearHTML() {
     var elem = document.querySelector(".calendar");
     elem.innerHTML = "";
+}
+
+/**
+ * Validation for the user input data
+ * @function validateInputData
+ */
+function validateInputData() {
+    var valid = 0;
+    var message = "";
+
+    if (!document.getElementById("date").checkValidity()) {
+        valid++;
+    }
+    if (!document.getElementById("days").checkValidity()) {
+        valid++;
+    }
+    if (!document.getElementById("code").checkValidity()) {
+        valid++;
+    }
+
+    if (valid > 0) {
+        alert("Please insert valid input data.");
+    } 
+
+    return valid == 0;
 }

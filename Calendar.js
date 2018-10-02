@@ -6,7 +6,7 @@ var Calendar = {
         let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             daysInMonth = [31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
             limitForRows = [7, 14, 21, 28, 35, 42],
-            rowBreak = [8, 14, 21, 28, 35, 42],
+            rowBreak = [8, 15, 22, 29, 36, 43],
             paint = true;
         
         var getFirstDay = function(date) {

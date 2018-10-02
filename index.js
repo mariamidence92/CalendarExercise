@@ -23,10 +23,11 @@ function addEventListeners() {
 
 /**
  * Initial function that will call the subfunctions to render a calendar  
- * according to the parameters specified by the user.
+ * according to the parameters specified by the user
  * @function createCalendar
  */
 function createCalendar() {
+    clearHTML();
     let input = getInputData();
     let calendar = Object.create(Calendar);
     calendar.drawCalendar(input.date, input.days, input.code, "");
@@ -57,4 +58,14 @@ function getInputData() {
  */
 function getCalendar(htmlText) {
     document.querySelector(".calendar").insertAdjacentHTML("beforeend", htmlText);
+}
+
+/**
+ * Clearing the existing HTML because if not the new calendar rendition will just be added 
+ * to the page beside the existing one.
+ * @function clearHTML
+ */
+function clearHTML() {
+    var elem = document.querySelector(".calendar");
+    elem.innerHTML = "";
 }

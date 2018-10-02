@@ -15,8 +15,27 @@ body {
     width: 100%;
 }
 
-.data-container {
-    grid-column:1;
+.calendar {
+    display: flex;
+}
+
+.calendar-container {
+    margin-top: 20px;
+    overflow: auto;
+}
+
+.days-header {
+    margin-bottom: 30px;
+}
+
+.days-header span {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.data-content {
+    background-color: #FFF;
+    display: -webkit-box;
 }
 
 form {
@@ -37,6 +56,10 @@ html {
     text-align: center;
 }
 
+.holiday {
+    background-color: #ff8b1f;
+}
+
 .input-data {
     background-color: #1091cc;
     color: white;
@@ -44,18 +67,19 @@ html {
 }
 
 .input-data label{
-    float: left;
+    padding: 1% 0
 }
 
 .input-data input{
     margin-bottom: 10px;
     width: 100%;
+    grid-auto-rows: 1fr;
+
 }
 
 input {
     border: 1px solid #ccc;
-    border-radius: 4px;
-    display: inline-block;
+    border-radius: 5px;
     margin: 8px 0;
     padding: 5px 10px;
     width: 100%;
@@ -68,7 +92,7 @@ input[type=button]{
     color: #1091cc;
     font-weight: 900;
     line-height: 25px;
-    padding: 5px;
+    margin: 3% 0;
     width: 100%;
 } 
 
@@ -79,3 +103,41 @@ input[type=date]{
 input[type=number], input[type=text]{
     height: 70%;
 } 
+
+.invalid-date {
+    background-color: #d4c2ff;
+}
+
+.month-container {
+    width: 300px;
+    margin-bottom: 10px;
+    padding: 2%; 
+}
+
+.month-container .days .day-title {
+    background-color: white;
+    border: none;
+    font-weight: 600;
+    line-height: 25px;
+}
+
+.month-container td {
+    border: 1px solid white;
+    line-height: 25px;
+    min-width: 35px;
+}
+
+.month-title {
+    background-color: beige;
+    color: black;
+}
+
+.weekend {
+    background-color: #ffdb26;
+}
+
+.weekday {    
+    color: black;
+    background-color: #44b816;
+    padding: 2px;
+}

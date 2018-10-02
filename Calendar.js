@@ -4,7 +4,7 @@ var Calendar = {
     },
     drawCalendar: function(initialDate, daysToRender, countryCode, htmlString) {
         let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            monthDays = [31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+            daysInMonth = [31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
             limitForRows = [7, 14, 21, 28, 35, 42],
             rowBreak = [8, 15, 22, 29, 36, 43],
             paint = true;
@@ -19,14 +19,12 @@ var Calendar = {
         var getDaysOfTheMonth = function(month, year) {
             let daysToRender = -1;
             if (month === 1) {
-                daysToRender = (((year % 100 != 0) &&
-                        (year % 4 == 0)) ||
-                    (year % 400 == 0)) ? 29 : 28;
+                daysToRender = (((year % 100 != 0) && (year % 4 == 0)) || (year % 400 == 0)) ? 29 : 28;
             } else {
-                daysToRender = monthDays[month];
+                daysToRender = daysInMonth[month];
             }
             return daysToRender;
-        };
+        }
 
         // Consumes REST api
         var getHolidays = function (year, month) {
@@ -52,15 +50,24 @@ var Calendar = {
             httpRequest.send();
         }
 
-        var month = initialDate.getMonth(),
-            year = initialDate.getFullYear(),
+        isHoliday = function(d) {
+            for (let i = 0; i < data.holidays.length; i++) {
+                if (data.holidays[i].date.split("-")[2].replace(/(^|-)0+/g, "$1") == d)
+                    return data.holidays[i].name;
+            }
+            return false;
+        }
+
+        let monthToRender = initialDate.getMonth(),
+            yearToRender = initialDate.getFullYear(),
             startDate = initialDate.getDay(),
             initialDay = getFirstDay(initialDate),
-            style = "weekday",
             title = "",
-            value, htmlString;
+            holidayName = -1,
+            style = "weekday",
+            value;
 
-        getHolidays(year, month + 1);
+        getHolidays(yearToRender, monthToRender + 1);
 
         htmlString += '<div><table cols="7" cellpadding="0" cellspacing="0" class="month-container"><tr align="center" class="days">';
 
@@ -73,7 +80,7 @@ var Calendar = {
         }   
 
         htmlString += '</tr><tr align="center">';
-        htmlString += '<td colspan="7" align="center" class="month-title">' + months[month] + ' - ' + year + '</td></tr><tr align="center"> </tr><tr align="center">';
+        htmlString += '<td colspan="7" align="center" class="month-title">' + months[monthToRender] + ' - ' + yearToRender + '</td></tr><tr align="center"> </tr><tr align="center">';
 
         //Render the calendar, 42  possible individual cells
         for (let i = 1; i <= 42; i++) {
@@ -83,10 +90,21 @@ var Calendar = {
                 break;
             }
 
-            if ((i >= startDate) && (initialDay <= getDaysOfTheMonth(month, year)) && (daysToRender > 0)) {
+            if ((i >= startDate) && (initialDay <= getDaysOfTheMonth(monthToRender, yearToRender)) && (daysToRender > 0)) {
                 value = initialDay;
                 daysToRender--;
                 initialDay++;
+
+                // Returns true if the day is a holiday
+                holidayName = isHoliday(value);
+
+                if (holidayName) {
+                    style = "holiday";
+                    title = 'title="' + holidayName + '"';
+                } else {
+                    style = ((i) % 7 == 0) || ((i - 1) % 7 == 0) ? "weekend" : "weekday";
+                    title = "";
+                }
             } else {
                 //Invalid date should be color gray
                 value = '&nbsp;';
@@ -104,9 +122,9 @@ var Calendar = {
 
         //Call drawCalendar to render every month needed
         if (daysToRender > 0) {
-            var nextMonth = month === 11 ? 0 : month + 1,
-                year = nextMonth === 1 ? year + 1 : year,
-                date = new Date(year, nextMonth, 01);
+            let nextMonth = monthToRender === 11 ? 0 : monthToRender + 1,
+                yearToRender = nextMonth === 1 ? yearToRender + 1 : yearToRender,
+                date = new Date(yearToRender, nextMonth, 01);
 
             this.drawCalendar(date, daysToRender, countryCode, htmlString);
         } else {

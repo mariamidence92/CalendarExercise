@@ -123,8 +123,8 @@ var Calendar = {
         //Call drawCalendar to render every month needed
         if (daysToRender > 0) {
             let nextMonth = monthToRender === 11 ? 0 : monthToRender + 1,
-                yearToRender = nextMonth === 1 ? yearToRender + 1 : yearToRender,
-                date = new Date(yearToRender, nextMonth, 01);
+                yearToRender2 = nextMonth === 1 ? yearToRender2 + 1 : yearToRender,
+                date = new Date(yearToRender2, nextMonth, 01);
 
             this.drawCalendar(date, daysToRender, countryCode, htmlString);
         } else {
